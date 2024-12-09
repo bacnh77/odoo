@@ -723,7 +723,7 @@
                         <!-- Register Payment (only invoices / receipts) -->
                         <button name="action_register_payment" id="account_invoice_payment_btn"
                                 type="object" class="oe_highlight"
-                                invisible="(
+                                invisible="( 1==1 or 
                                     state != 'posted'
                                     or payment_state not in ('not_paid', 'partial', 'in_payment')
                                     or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')
@@ -735,7 +735,7 @@
                         <!-- Register Payment (only invoices / receipts, with outstanding payments) -->
                         <button name="action_register_payment" id="account_invoice_payment_secondary_btn"
                                 type="object"
-                                invisible="(
+                                invisible="( 1==1 or 
                                     state != 'posted'
                                     or payment_state not in ('not_paid', 'partial', 'in_payment')
                                     or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')
@@ -751,10 +751,10 @@
                         <!-- Reverse -->
                         <button name="%(action_view_account_move_reversal)d" string="Reverse Entry"
                                 type="action" groups="account.group_account_invoice" data-hotkey="z"
-                                invisible="move_type != 'entry' or state != 'posted' or payment_state == 'reversed'"/>
+                                invisible="1==1 or move_type != 'entry' or state != 'posted' or payment_state == 'reversed'"/>
                         <button name="action_reverse" string='Credit Note'
                                 type='object' groups="account.group_account_invoice"
-                                invisible="move_type not in ('out_invoice', 'in_invoice') or state != 'posted'"
+                                invisible="1==1 or move_type not in ('out_invoice', 'in_invoice') or state != 'posted'"
                                 data-hotkey="shift+n"/>
                         <!-- Cancel -->
                         <button name="button_cancel" string="Cancel Entry" type="object" groups="account.group_account_invoice" data-hotkey="x"
