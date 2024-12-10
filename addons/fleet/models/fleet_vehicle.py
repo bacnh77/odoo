@@ -123,6 +123,10 @@ class FleetVehicle(models.Model):
     ], compute='_compute_service_activity')
     vehicle_properties = fields.Properties('Properties', definition='model_id.vehicle_properties_definition', copy=True)
     vehicle_range = fields.Integer(string="Range")
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Partner',
+    )
 
     @api.depends('log_services')
     def _compute_service_activity(self):
