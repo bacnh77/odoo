@@ -125,8 +125,9 @@ class FleetVehicle(models.Model):
     vehicle_range = fields.Integer(string="Range")
     partner_id = fields.Many2one(
         comodel_name='res.partner',
-        string='Partner',
+        string='Owner',
     )
+
 
     @api.depends('log_services')
     def _compute_service_activity(self):

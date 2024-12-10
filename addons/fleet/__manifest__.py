@@ -27,6 +27,7 @@ Main Features
     'depends': [
         'base',
         'mail',
+        'account',
     ],
     'data': [
         'security/fleet_security.xml',

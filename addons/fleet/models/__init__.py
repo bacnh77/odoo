@@ -14,3 +14,4 @@ from . import fleet_vehicle_state
 from . import fleet_vehicle_tag
 from . import res_config_settings
 from . import res_partner
+from . import account_move

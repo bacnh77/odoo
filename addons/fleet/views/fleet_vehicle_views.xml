@@ -82,6 +82,10 @@
                         <h2>
                             <field name="license_plate" class="oe_inline" placeholder="e.g. PAE 326"/>
                         </h2>
+                        <label for="partner_id"/>
+                        <h2>
+                            <field name="partner_id" readonly="1"/>
+                        </h2>
                         <label for="tag_ids" class="me-3"/>
                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                     </div>
@@ -594,5 +598,202 @@
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">action = records.action_send_email()</field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook[@colspan='4']" position="replace">
+                <notebook colspan="5">
+                    <page string="Vehicles" name="vehicles" autofocus="autofocus">
+                        <field name="vehicle_ids" mode="kanban" context="{'default_partner_id': id}">
+                            <kanban color="color">
+                                <field name="name"/>
+                                <field name="image_128"/>
+                                <templates>
+                                    <t t-name="card" class="flex-row">
+                                        <aside class="o_kanban_aside_full">
+                                            <field name="image_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Vehicle image"/>
+                                        </aside>
+                                        <main class="ps-2 ps-md-0">
+                                            <field name="name" class="fw-bold"/>
+                                            <field name="description"/>
+                                        </main>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <!--<form string="Vehicle">
+                                <sheet>
+                                    <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                    <div class="text-muted oe_edit_only">
+                                        <p class="mb-0" invisible="type != 'contact'">
+                                            <span>Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'invoice'">
+                                            <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'delivery'">
+                                            <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'other'">
+                                            <span>Other address for the company (e.g. subsidiary, ...)</span>
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                    <group>
+                                        <group>
+                                            <field name="name" string="Contact Name" required="type == 'contact'"
+                                                 placeholder="e.g. New Address"/>
+                                            <field name="title" options="{'no_open': True}" placeholder="e.g. Mr."
+                                                invisible="type != 'contact'"/>
+                                            <field name="function" placeholder="e.g. Sales Director"
+                                                invisible="type != 'contact'"/>
+                                            <label for="street" string="Address" invisible="type == 'contact'"/>
+                                            <div invisible="type == 'contact'">
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                                </div>
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <field name="email" widget="email"/>
+                                            <field name="phone" widget="phone"/>
+                                            <field name="mobile" widget="phone"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="comment" placeholder="Internal notes..." nolabel="1"/>
+                                    </group>
+                                    <field name="lang" invisible="True"/>  &lt;!&ndash; Need to add lang to save default value from parented record &ndash;&gt;
+                                </sheet>
+                            </form>-->
+                        </field>
+                    </page>
+                    <page string="Contacts &amp; Addresses" name="contact_addresses">
+                        <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">
+                            <kanban color="color">
+                                <field name="color"/>
+                                <field name="type"/>
+                                <field name="is_company"/>
+                                <templates>
+                                    <t t-name="card" class="flex-row">
+                                        <aside class="o_kanban_aside_full">
+                                            <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Contact image"/>
+                                        </aside>
+                                        <main class="ps-2 ps-md-0">
+                                            <field name="name" class="fw-bold"/>
+                                            <field name="function"/>
+                                            <field name="email" widget="email"/>
+                                            <div t-if="record.type.raw_value != 'contact'">
+                                                <div>
+                                                    <field class="me-1" name="zip"/>
+                                                    <field name="city"/>
+                                                </div>
+                                                <field class="me-1" name="state_id"/>
+                                                <field name="country_id"/>
+                                            </div>
+                                            <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                            <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                        </main>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Contact / Address">
+                                <sheet>
+                                    <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                    <div class="text-muted oe_edit_only">
+                                        <p class="mb-0" invisible="type != 'contact'">
+                                            <span>Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'invoice'">
+                                            <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'delivery'">
+                                            <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'other'">
+                                            <span>Other address for the company (e.g. subsidiary, ...)</span>
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                    <group>
+                                        <group>
+                                            <field name="name" string="Contact Name" required="type == 'contact'"
+                                                 placeholder="e.g. New Address"/>
+                                            <field name="title" options="{'no_open': True}" placeholder="e.g. Mr."
+                                                invisible="type != 'contact'"/>
+                                            <field name="function" placeholder="e.g. Sales Director"
+                                                invisible="type != 'contact'"/>
+                                            <label for="street" string="Address" invisible="type == 'contact'"/>
+                                            <div invisible="type == 'contact'">
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                                </div>
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <field name="email" widget="email"/>
+                                            <field name="phone" widget="phone"/>
+                                            <field name="mobile" widget="phone"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="comment" placeholder="Internal notes..." nolabel="1"/>
+                                    </group>
+                                    <field name="lang" invisible="True"/>  <!-- Need to add lang to save default value from parented record -->
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                    <page name='sales_purchases' string="Sales &amp; Purchase">
+                        <group name="container_row_2">
+                            <group string="Sales" name="sale" priority="1">
+                                <field name="user_id" widget="many2one_avatar_user" domain="[('share', '=', False)]"/>
+                            </group>
+                            <group string="Purchase" name="purchase" priority="2">
+                            </group>
+                            <group name="misc" string="Misc">
+                                <field name="company_registry" invisible="parent_id"/>
+                                <field name="ref" string="Reference"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" readonly="parent_id" force_save="1"/>
+                                <field name="company_id" invisible="1"/> <!-- need to be able to to compute based on the company even without multi company groups -->
+                                <field name="industry_id" invisible="not is_company" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name='internal_notes' string="Internal Notes">
+                        <field name="comment" placeholder="Internal notes..."/>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_shipping_id']" position="before">
+                <field name="vehicle_id"
+                       domain="[('partner_id', '=', partner_id)]"
+                       context="{'default_partner_id': partner_id}"
+                       options="{'no_quick_create': True}"
+                       readonly="(state != 'draft' or not partner_id)"/>
+            </xpath>
+        </field>
     </record>
 </odoo>
