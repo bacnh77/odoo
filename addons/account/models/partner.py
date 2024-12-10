@@ -34,6 +34,12 @@ class AccountFiscalPosition(models.Model):
         string='Company', required=True, readonly=True,
         default=lambda self: self.env.company)
     account_ids = fields.One2many('account.fiscal.position.account', 'position_id', string='Account Mapping', copy=True)
+    vehicle_ids = fields.One2many(
+        'fleet.vehicle',
+        'partner_id',
+        string='Vehicles',
+        copy=True,
+    )
     account_map = fields.Binary(compute='_compute_account_map')
     tax_ids = fields.One2many('account.fiscal.position.tax', 'position_id', string='Tax Mapping', copy=True)
     tax_map = fields.Binary(compute='_compute_tax_map')
