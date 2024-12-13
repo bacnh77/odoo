@@ -62,12 +62,14 @@ class FleetVehicleModel(models.Model):
             domain = ['!', *domain]
         return domain
 
-    @api.depends('brand_id')
+    @api.depends('brand_id', 'model_year')
     def _compute_display_name(self):
         for record in self:
             name = record.name
             if record.brand_id.name:
                 name = f"{record.brand_id.name}/{name}"
+            if record.model_year:
+                name += f"/{record.model_year}"
             record.display_name = name
 
     def _compute_vehicle_count(self):
