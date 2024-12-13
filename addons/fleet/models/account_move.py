@@ -25,6 +25,17 @@ class AccountMove(models.Model):
         ondelete="set null", tracking=True,
         domain="[('partner_id', '=', partner_id))")
 
+    vehicle_odometer = fields.Float(string='Last Odometer', store=True,
+                                    help='Odometer measure of the vehicle at the moment of this log')
+
+    # def write(self, vals):
+    #     odometer = vals.get('vehicle_odometer')
+    #     if odometer:
+    #         for inv in self:
+    #             if inv.vehicle_id:
+    #                 inv.vehicle_id.sudo().write({'odometer': odometer})
+    #     return super(AccountMove, self).write(vals)
+
 
 class FleetVehicle(models.Model):
     _inherit = ['fleet.vehicle']

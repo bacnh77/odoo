@@ -793,6 +793,8 @@
                        context="{'default_partner_id': partner_id}"
                        options="{'no_quick_create': True}"
                        readonly="(state != 'draft' or not partner_id)"/>
+                <field name="vehicle_odometer"
+                       readonly="(state != 'draft')"/>
             </xpath>
         </field>
     </record>

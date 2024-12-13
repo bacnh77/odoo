@@ -320,8 +320,8 @@ class FleetVehicle(models.Model):
         return vehicles
 
     def write(self, vals):
-        if 'odometer' in vals and any(vehicle.odometer > vals['odometer'] for vehicle in self):
-            raise UserError(_('The odometer value cannot be lower than the previous one.'))
+        #if 'odometer' in vals and any(vehicle.odometer > vals['odometer'] for vehicle in self):
+        #    raise UserError(_('The odometer value cannot be lower than the previous one.'))
 
         if 'driver_id' in vals and vals['driver_id']:
             driver_id = vals['driver_id']
