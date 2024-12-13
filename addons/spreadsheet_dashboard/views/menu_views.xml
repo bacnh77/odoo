@@ -11,6 +11,7 @@
         name="Dashboards"
         action="ir_actions_dashboard_action"
         web_icon="spreadsheet_dashboard,static/description/icon.png"
+        groups="base.group_erp_manager"
         sequence="37"/>
 
     <menuitem
