@@ -151,10 +151,15 @@ class FleetVehicle(models.Model):
                 model_values[vehicle.model_id.id] = write_vals
             vehicle.update(write_vals)
 
-    @api.depends('model_id.brand_id.name', 'model_id.name', 'license_plate')
+    @api.depends('model_id.brand_id.name', 'model_id.name', 'license_plate', 'model_year')
     def _compute_vehicle_name(self):
         for record in self:
-            record.name = (record.model_id.brand_id.name or '') + '/' + (record.model_id.name or '') + '/' + (record.license_plate or _('No Plate'))
+            record.name = (record.model_id.brand_id.name or '') + '/' + (record.model_id.name or '') + ('/' + f'{record.model_year}' if record.model_year else '') + '/' + (record.license_plate or _('No Plate'))
+
+    @api.depends('model_id.brand_id.name', 'model_id.name', 'license_plate', 'model_year')
+    def _compute_display_name(self):
+        for record in self:
+            record.display_name = (record.model_id.brand_id.name or '') + '/' + (record.model_id.name or '') + ('/' + f'{record.model_year}' if record.model_year else '') + '/' + (record.license_plate or _('No Plate'))
 
     def _get_odometer(self):
         FleetVehicalOdometer = self.env['fleet.vehicle.odometer']
@@ -437,3 +442,4 @@ class FleetVehicle(models.Model):
                 'default_vehicle_ids': self.ids,
             }
         }
+
