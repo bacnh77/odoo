@@ -1,4 +1,6 @@
 from odoo import api, fields, models, _
+from odoo.api import ValuesType, Self
+
 
 class AccountMove(models.Model):
     _inherit = ['account.move']
@@ -25,16 +27,32 @@ class AccountMove(models.Model):
         ondelete="set null", tracking=True,
         domain="[('partner_id', '=', partner_id))")
 
-    vehicle_odometer = fields.Float(string='Last Odometer', store=True,
+    @api.depends('vehicle_id')
+    def _compute_vehicle_odometer(self):
+        for inv in self:
+            if inv.vehicle_id and not inv.vehicle_odometer:
+                inv.vehicle_odometer = inv.vehicle_id.odometer
+        return
+
+
+    vehicle_odometer = fields.Float(string='Last Odometer', store=True, compute=_compute_vehicle_odometer,
                                     help='Odometer measure of the vehicle at the moment of this log')
 
-    # def write(self, vals):
-    #     odometer = vals.get('vehicle_odometer')
-    #     if odometer:
-    #         for inv in self:
-    #             if inv.vehicle_id:
-    #                 inv.vehicle_id.sudo().write({'odometer': odometer})
-    #     return super(AccountMove, self).write(vals)
+    def create(self, vals):
+        odometer = vals.get('vehicle_odometer')
+        if odometer:
+            for inv in self:
+                if inv.vehicle_id:
+                    inv.vehicle_id.sudo().write({'odometer': odometer})
+        return super(AccountMove, self).create(vals)
+
+    def write(self, vals):
+        odometer = vals.get('vehicle_odometer')
+        if odometer:
+            for inv in self:
+                if inv.vehicle_id:
+                    inv.vehicle_id.sudo().write({'odometer': odometer})
+        return super(AccountMove, self).write(vals)
 
 
 class FleetVehicle(models.Model):
