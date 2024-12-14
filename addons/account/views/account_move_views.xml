@@ -1556,81 +1556,81 @@
                                 ('name', 'ilike', self), ('invoice_origin', 'ilike', self),
                                 ('ref', 'ilike', self), ('payment_reference', 'ilike', self),
                                 ('partner_id', 'child_of', self)]"/>
-                    <field name="name"/>
-                    <field name="ref"/>
-                    <field name="payment_reference"/>
-                    <field name="journal_id"/>
-                    <field name="journal_group_id"/>
-                    <field name="partner_id" operator="child_of"/>
-                    <field name="invoice_user_id" string="Salesperson" domain="[('share', '=', False)]"/>
-                    <field name="date" string="Period"/>
-                    <field name="next_payment_date"/>
-                    <field name="line_ids" string="Invoice Line"/>
-                    <filter domain="[('invoice_user_id', '=', uid)]" name="myinvoices" help="My Invoices"/>
-                    <separator/>
-                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
-                    <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
-                    <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
-                    <separator groups="account.group_account_secured,base.group_no_one"/>
-                    <filter name="not_secured" string="Not Secured" domain="[('secured', '=', False), ('state', '=', 'posted')]"
-                            groups="account.group_account_secured,base.group_no_one"/>
-                    <separator/>
-                    <filter name="not_sent"
-                            string="Not Sent"
-                            domain="[('is_move_sent', '=', False)]"
-                            invisible="context.get('default_move_type') in ('in_invoice', 'in_refund', 'in_receipt')"
-                    />
-                    <separator/>
-                    <filter name="out_invoice"
-                            string="Invoices"
-                            domain="[('move_type', '=', 'out_invoice')]"
-                    />
-                    <filter name="out_refund"
-                            string="Credit Notes"
-                            domain="[('move_type', '=', 'out_refund')]"
-                    />
-                    <separator/>
-                    <filter string="To Check" name="to_check" domain="[('checked', '=', False), ('state', '!=', 'draft')]"/>
-                    <separator/>
-                    <!-- not_paid & partial -->
-                    <filter name="open" string="To pay" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>
-                    <!-- in_payment & paid -->
-                    <filter name="in_payment" string="In payment" domain="[('state', '=', 'posted'), ('payment_state', '=', 'in_payment')]"/>
-                    <!-- overdue -->
-                    <filter name="late" string="Overdue" domain="[
-                        ('invoice_date_due', '&lt;', time.strftime('%Y-%m-%d')),
-                        ('state', '=', 'posted'),
-                        ('payment_state', 'in', ('not_paid', 'partial', 'in_payment'))
-                    ]" help="Overdue invoices, maturity date passed"/>
-                    <separator/>
-                    <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
-                    <filter name="date" invisible="context.get('default_move_type') in ('out_invoice', 'out_refund', 'out_receipt')" string="Accounting Date" date="date"/>
-                    <filter name="due_date" string="Due Date" date="invoice_date_due"/>
-                    <separator/>
-                    <filter invisible="1" string="Late Activities" name="activities_overdue"
-                        domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
-                        help="Show all records which has next action date is before today"/>
-                    <filter invisible="1" string="Today Activities" name="activities_today"
-                        domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                        domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
-                    <group expand="0" string="Group By">
-                        <filter string="Salesperson" name="salesperson" context="{'group_by':'invoice_user_id'}"/>
-                        <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
-                        <filter name="status" string="Status" context="{'group_by':'state'}"/>
-                        <filter string="Payment Method"
-                                name="preferred_payment_method_line"
-                                context="{'group_by': 'preferred_payment_method_line_id'}"
-                                groups="account.group_account_invoice,account.group_account_readonly"
-                        />
-                        <filter string="Journal" name="groupy_by_journal" domain="[]" context="{'group_by': 'journal_id'}"/>
-                        <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
-                        <separator/>
-                        <filter string="Invoice Date" name="invoicedate" context="{'group_by': 'invoice_date'}"/>
-                        <filter string="Due Date" name="duedate" context="{'group_by': 'invoice_date_due'}"/>
-                        <filter string="Accounting Date" name="accounting_date" context="{'group_by': 'date'}"/>
-                        <filter string="Sequence Prefix" name="group_by_sequence_prefix" context="{'group_by': 'sequence_prefix'}" invisible="1"/>
-                    </group>
+<!--                    <field name="name"/>-->
+<!--                    <field name="ref"/>-->
+<!--                    <field name="payment_reference"/>-->
+<!--                    <field name="journal_id"/>-->
+<!--                    <field name="journal_group_id"/>-->
+<!--                    <field name="partner_id" operator="child_of"/>-->
+<!--                    <field name="invoice_user_id" string="Salesperson" domain="[('share', '=', False)]"/>-->
+<!--                    <field name="date" string="Period"/>-->
+<!--                    <field name="next_payment_date"/>-->
+<!--                    <field name="line_ids" string="Invoice Line"/>-->
+<!--                    <filter domain="[('invoice_user_id', '=', uid)]" name="myinvoices" help="My Invoices"/>-->
+<!--                    <separator/>-->
+<!--                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>-->
+<!--                    <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>-->
+<!--                    <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>-->
+<!--                    <separator groups="account.group_account_secured,base.group_no_one"/>-->
+<!--                    <filter name="not_secured" string="Not Secured" domain="[('secured', '=', False), ('state', '=', 'posted')]"-->
+<!--                            groups="account.group_account_secured,base.group_no_one"/>-->
+<!--                    <separator/>-->
+<!--                    <filter name="not_sent"-->
+<!--                            string="Not Sent"-->
+<!--                            domain="[('is_move_sent', '=', False)]"-->
+<!--                            invisible="context.get('default_move_type') in ('in_invoice', 'in_refund', 'in_receipt')"-->
+<!--                    />-->
+<!--                    <separator/>-->
+<!--                    <filter name="out_invoice"-->
+<!--                            string="Invoices"-->
+<!--                            domain="[('move_type', '=', 'out_invoice')]"-->
+<!--                    />-->
+<!--                    <filter name="out_refund"-->
+<!--                            string="Credit Notes"-->
+<!--                            domain="[('move_type', '=', 'out_refund')]"-->
+<!--                    />-->
+<!--                    <separator/>-->
+<!--                    <filter string="To Check" name="to_check" domain="[('checked', '=', False), ('state', '!=', 'draft')]"/>-->
+<!--                    <separator/>-->
+<!--                    &lt;!&ndash; not_paid & partial &ndash;&gt;-->
+<!--                    <filter name="open" string="To pay" domain="[('state', '=', 'posted'), ('payment_state', 'in', ('not_paid', 'partial'))]"/>-->
+<!--                    &lt;!&ndash; in_payment & paid &ndash;&gt;-->
+<!--                    <filter name="in_payment" string="In payment" domain="[('state', '=', 'posted'), ('payment_state', '=', 'in_payment')]"/>-->
+<!--                    &lt;!&ndash; overdue &ndash;&gt;-->
+<!--                    <filter name="late" string="Overdue" domain="[-->
+<!--                        ('invoice_date_due', '&lt;', time.strftime('%Y-%m-%d')),-->
+<!--                        ('state', '=', 'posted'),-->
+<!--                        ('payment_state', 'in', ('not_paid', 'partial', 'in_payment'))-->
+<!--                    ]" help="Overdue invoices, maturity date passed"/>-->
+<!--                    <separator/>-->
+<!--                    <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>-->
+<!--                    <filter name="date" invisible="context.get('default_move_type') in ('out_invoice', 'out_refund', 'out_receipt')" string="Accounting Date" date="date"/>-->
+<!--                    <filter name="due_date" string="Due Date" date="invoice_date_due"/>-->
+<!--                    <separator/>-->
+<!--                    <filter invisible="1" string="Late Activities" name="activities_overdue"-->
+<!--                        domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"-->
+<!--                        help="Show all records which has next action date is before today"/>-->
+<!--                    <filter invisible="1" string="Today Activities" name="activities_today"-->
+<!--                        domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+<!--                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"-->
+<!--                        domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>-->
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Salesperson" name="salesperson" context="{'group_by':'invoice_user_id'}"/>-->
+<!--                        <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>-->
+<!--                        <filter name="status" string="Status" context="{'group_by':'state'}"/>-->
+<!--                        <filter string="Payment Method"-->
+<!--                                name="preferred_payment_method_line"-->
+<!--                                context="{'group_by': 'preferred_payment_method_line_id'}"-->
+<!--                                groups="account.group_account_invoice,account.group_account_readonly"-->
+<!--                        />-->
+<!--                        <filter string="Journal" name="groupy_by_journal" domain="[]" context="{'group_by': 'journal_id'}"/>-->
+<!--                        <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>-->
+<!--                        <separator/>-->
+<!--                        <filter string="Invoice Date" name="invoicedate" context="{'group_by': 'invoice_date'}"/>-->
+<!--                        <filter string="Due Date" name="duedate" context="{'group_by': 'invoice_date_due'}"/>-->
+<!--                        <filter string="Accounting Date" name="accounting_date" context="{'group_by': 'date'}"/>-->
+<!--                        <filter string="Sequence Prefix" name="group_by_sequence_prefix" context="{'group_by': 'sequence_prefix'}" invisible="1"/>-->
+<!--                    </group>-->
                </search>
             </field>
         </record>
@@ -1644,41 +1644,41 @@
                 <field name="name" position="attributes">
                     <attribute name="string">Bill</attribute>
                 </field>
-                <filter name="myinvoices" position="replace"/>
-                <filter name="invoice_date" position="attributes">
-                    <attribute name="string">Bill Date</attribute>
-                </filter>
-                <filter name="salesperson" position="replace"/>
-                <filter name="invoicedate" position="attributes">
-                    <attribute name="string">Bill Date</attribute>
-                </filter>
-                <filter name="out_invoice" position="replace">
-                    <filter name="in_invoice"
-                            string="Bills"
-                            domain="[('move_type', '=', 'in_invoice')]"
-                    />
-                </filter>
-                <filter name="out_refund" position="replace">
-                    <filter name="in_refund"
-                            string="Refunds"
-                            domain="[('move_type', '=', 'in_refund')]"
-                    />
-                </filter>
+<!--                <filter name="myinvoices" position="replace"/>-->
+<!--                <filter name="invoice_date" position="attributes">-->
+<!--                    <attribute name="string">Bill Date</attribute>-->
+<!--                </filter>-->
+<!--                <filter name="salesperson" position="replace"/>-->
+<!--                <filter name="invoicedate" position="attributes">-->
+<!--                    <attribute name="string">Bill Date</attribute>-->
+<!--                </filter>-->
+<!--                <filter name="out_invoice" position="replace">-->
+<!--                    <filter name="in_invoice"-->
+<!--                            string="Bills"-->
+<!--                            domain="[('move_type', '=', 'in_invoice')]"-->
+<!--                    />-->
+<!--                </filter>-->
+<!--                <filter name="out_refund" position="replace">-->
+<!--                    <filter name="in_refund"-->
+<!--                            string="Refunds"-->
+<!--                            domain="[('move_type', '=', 'in_refund')]"-->
+<!--                    />-->
+<!--                </filter>-->
             </field>
         </record>
 
-        <record id="view_account_move_with_gaps_in_sequence_filter" model="ir.ui.view">
-            <field name="name">account.move.with.gaps.in.sequence.filter</field>
-            <field name="model">account.move</field>
-            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
-            <field name="mode">primary</field>
-            <field name="arch" type="xml">
-                <filter name="due_date" position="after">
-                    <separator/>
-                    <filter name="irregular_sequences" string="Irregular Sequences" domain="['|', ('made_sequence_gap', '=', True), '&amp;', '&amp;', ('state', 'in', ('draft', 'cancel')), ('sequence_number', '!=', 0), ('name', '!=', '/')]"/>
-                </filter>
-            </field>
-        </record>
+<!--        <record id="view_account_move_with_gaps_in_sequence_filter" model="ir.ui.view">-->
+<!--            <field name="name">account.move.with.gaps.in.sequence.filter</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_invoice_filter"/>-->
+<!--            <field name="mode">primary</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <filter name="due_date" position="after">-->
+<!--                    <separator/>-->
+<!--                    <filter name="irregular_sequences" string="Irregular Sequences" domain="['|', ('made_sequence_gap', '=', True), '&amp;', '&amp;', ('state', 'in', ('draft', 'cancel')), ('sequence_number', '!=', 0), ('name', '!=', '/')]"/>-->
+<!--                </filter>-->
+<!--            </field>-->
+<!--        </record>-->
 
         <!-- ACTIONS -->
 
