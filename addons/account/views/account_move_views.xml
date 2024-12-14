@@ -511,7 +511,7 @@
                       sample="1">
                     <header>
                         <button name="action_force_register_payment" type="object" string="Pay"
-                            groups="account.group_account_invoice"
+                            groups="base.group_no_one"
                             invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund', 'out_receipt', 'in_invoice', 'in_refund','in_receipt')"/>
                     </header>
                     <field name="made_sequence_gap" column_invisible="True"/>
@@ -723,7 +723,7 @@
                         <!-- Register Payment (only invoices / receipts) -->
                         <button name="action_register_payment" id="account_invoice_payment_btn"
                                 type="object" class="oe_highlight"
-                                invisible="( 1==1 or 
+                                invisible="( 1==1 or
                                     state != 'posted'
                                     or payment_state not in ('not_paid', 'partial', 'in_payment')
                                     or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')
@@ -731,11 +731,11 @@
                                 )"
                                 context="{'dont_redirect_to_payments': True, 'display_account_trust': True}"
                                 string="Pay" data-hotkey="g"
-                                groups="account.group_account_invoice"/>
+                                groups="base.group_no_one"/>
                         <!-- Register Payment (only invoices / receipts, with outstanding payments) -->
                         <button name="action_register_payment" id="account_invoice_payment_secondary_btn"
                                 type="object"
-                                invisible="( 1==1 or 
+                                invisible="( 1==1 or
                                     state != 'posted'
                                     or payment_state not in ('not_paid', 'partial', 'in_payment')
                                     or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')
@@ -743,7 +743,7 @@
                                 )"
                                 context="{'dont_redirect_to_payments': True, 'display_account_trust': True}"
                                 string="Pay" data-hotkey="g"
-                                groups="account.group_account_invoice"/>
+                                groups="base.group_no_one"/>
                         <!-- Preview (only customer invoices) -->
                         <button name="preview_invoice" type="object" string="Preview" data-hotkey="o"
                                 title="Preview invoice"
@@ -1943,7 +1943,7 @@
         <record model="ir.actions.server" id="action_move_switch_move_type">
             <field name="name">Switch into invoice/credit note</field>
             <field name="model_id" ref="account.model_account_move"/>
-            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
             <field name="binding_model_id" ref="account.model_account_move" />
             <field name="state">code</field>
             <field name="binding_view_types">form</field>
@@ -1956,7 +1956,7 @@ if records:
         <record model="ir.actions.server" id="action_move_force_register_payment">
             <field name="name">Pay</field>
             <field name="model_id" ref="account.model_account_move"/>
-            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
             <field name="binding_model_id" ref="account.model_account_move" />
             <field name="state">code</field>
             <field name="binding_view_types">form</field>
@@ -1969,7 +1969,7 @@ if records:
         <record model="ir.actions.server" id="action_move_block_payment">
             <field name="name">(Un)Block Payment</field>
             <field name="model_id" ref="account.model_account_move"/>
-            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
             <field name="binding_model_id" ref="account.model_account_move" />
             <field name="state">code</field>
             <field name="binding_view_types">form</field>
