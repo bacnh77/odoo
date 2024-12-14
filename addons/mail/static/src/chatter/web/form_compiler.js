@@ -42,10 +42,10 @@ function compileAttachmentPreview(node, params) {
     return webClientViewAttachmentViewContainerHookXml;
 }
 
-// registry.category("form_compilers").add("chatter_compiler", {
-//     selector: "chatter",
-//     fn: compileChatter,
-// });
+ registry.category("form_compilers").add("chatter_compiler", {
+     selector: "chatter",
+     fn: compileChatter,
+ });
 
 registry.category("form_compilers").add("attachment_preview_compiler", {
     selector: "div.o_attachment_preview",

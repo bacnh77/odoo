@@ -711,13 +711,13 @@
                         <!-- Send (only invoices) -->
                         <button name="action_invoice_sent"
                                 type="object"
-                                string="Print &amp; Send"
+                                string="Print"
                                 invisible="state != 'posted' or is_being_sent or invoice_pdf_report_id or move_type not in ('out_invoice', 'out_refund')"
                                 class="oe_highlight"
                                 data-hotkey="y"/>
                         <button name="action_invoice_sent"
                                 type="object"
-                                string="Print &amp; Send"
+                                string="Print"
                                 invisible="state != 'posted' or not is_being_sent and not invoice_pdf_report_id or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')"
                                 data-hotkey="y"/>
                         <!-- Register Payment (only invoices / receipts) -->
@@ -745,9 +745,9 @@
                                 string="Pay" data-hotkey="g"
                                 groups="base.group_no_one"/>
                         <!-- Preview (only customer invoices) -->
-                        <button name="preview_invoice" type="object" string="Preview" data-hotkey="o"
-                                title="Preview invoice"
-                                invisible="move_type not in ('out_invoice', 'out_refund') or state in ('draft', 'cancel')"/>
+<!--                        <button name="preview_invoice" type="object" string="Preview" data-hotkey="o"-->
+<!--                                title="Preview invoice"-->
+<!--                                invisible="move_type not in ('out_invoice', 'out_refund') or state in ('draft', 'cancel')"/>-->
                         <!-- Reverse -->
                         <button name="%(action_view_account_move_reversal)d" string="Reverse Entry"
                                 type="action" groups="account.group_account_invoice" data-hotkey="z"
@@ -1100,9 +1100,9 @@
                                     <list editable="bottom" string="Journal Items" default_order="sequence, id">
                                         <control>
                                             <create name="add_line_control" string="Add a line"/>
-                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
-                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
-                                            <button name="action_add_from_catalog" string="Catalog" type="object" class="btn-link" context="{'order_id': parent.id}"/>
+<!--                                            <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>-->
+<!--                                            <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>-->
+<!--                                            <button name="action_add_from_catalog" string="Catalog" type="object" class="btn-link" context="{'order_id': parent.id}"/>-->
                                         </control>
 
                                         <!-- Displayed fields -->
@@ -1383,83 +1383,83 @@
                                     <span>This entry has been generated through the Invoicing app, before installing Accounting. Its balance has been imported separately.</span>
                                 </div>
                             </page>
-                            <page id="other_tab" string="Other Info" name="other_info"
-                                  invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')">
-                                <group id="other_tab_group">
-                                    <group string="Invoice"
-                                           name="sale_info_group"
-                                           invisible="move_type not in ('out_invoice', 'out_refund')">
-                                        <label for="ref" string="Customer Reference" />
-                                        <field name="ref" nolabel="1"/>
-                                        <field name="user_id" invisible="1" force_save="1"/>
-                                        <field name="invoice_user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
-                                        <field name="invoice_origin" string="Source Document" force_save="1" invisible="1"/>
-                                        <field name="partner_bank_id"
-                                               context="{'default_partner_id': bank_partner_id, 'display_account_trust': True}"
-                                               domain="[('partner_id.ref_company_ids', 'parent_of', company_id)]"
-                                               readonly="state != 'draft'"/>
-                                        <field name="payment_reference"
-                                            invisible="move_type not in ('out_invoice', 'out_refund')"
-                                            readonly="inalterable_hash"
-                                            placeholder="Standard communication"/>
-                                        <field name="qr_code_method"
-                                               invisible="not display_qr_code"/>
-                                        <field name="delivery_date" readonly="state != 'draft'"/>
-                                    </group>
-                                    <group string="Accounting"
-                                           name="accounting_info_group"
-                                           invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')">
-                                        <field name="company_id" groups="base.group_multi_company"/>
-                                        <field name="invoice_incoterm_id"/>
-                                        <field name="incoterm_location"/>
-                                        <field name="fiscal_position_id" readonly="state in ['cancel', 'posted']"/>
-                                        <field name="secured" groups="account.group_account_secured,base.group_no_one"/>
-                                        <field name="preferred_payment_method_line_id"
-                                               string="Payment Method"
-                                               domain="[('payment_type', '=', 'inbound'), ('company_id', '=', company_id)]"
-                                               invisible="move_type in ('in_invoice', 'in_refund')"
-                                        />
-                                        <field name="preferred_payment_method_line_id"
-                                               string="Payment Method"
-                                               domain="[('payment_type', '=', 'outbound'), ('company_id', '=', company_id)]"
-                                               invisible="move_type in ('out_invoice', 'out_refund')"
-                                        />
-                                        <field name="invoice_cash_rounding_id" groups="account.group_cash_rounding" readonly="state != 'draft'"/>
-                                        <field name="invoice_source_email"
-                                               widget="email"
-                                               invisible="move_type not in ('in_invoice', 'in_refund') or not invoice_source_email"/>
-                                        <field name="auto_post"
-                                               readonly="state != 'draft'"/>
-                                        <field name="auto_post_until"
-                                               invisible="auto_post in ('no', 'at_date')"
-                                               readonly="state != 'draft'"/>
-                                        <field name="checked"/>
-                                    </group>
-                                </group>
-                            </page>
-                            <page id="other_tab_entry" string="Other Info" name="other_info"
-                                  invisible="move_type != 'entry'">
-                                <group id="other_tab_entry_group">
-                                    <group name="misc_group">
-                                        <field name="auto_post"
-                                               invisible="move_type != 'entry'"
-                                               readonly="state != 'draft'"/>
-                                        <field name="reversed_entry_id"
-                                               invisible="move_type != 'entry' or not reversed_entry_id"/>
-                                        <field name="auto_post_until"
-                                               invisible="auto_post in ('no', 'at_date')"
-                                               readonly="state != 'draft'"/>
-                                        <field name="checked"
-                                               invisible="move_type != 'entry'" />
-                                    </group>
-                                    <group>
-                                        <field name="fiscal_position_id" readonly="state in ['cancel', 'posted']"/>
-                                        <field name="company_id" groups="base.group_multi_company" required="1"/>
-                                    </group>
-                                </group>
-                                <!-- Internal note -->
-                                <field name="narration" placeholder="Add an internal note..." nolabel="1" height="50"/>
-                            </page>
+<!--                            <page id="other_tab" string="Other Info" name="other_info"-->
+<!--                                  invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')">-->
+<!--                                <group id="other_tab_group">-->
+<!--                                    <group string="Invoice"-->
+<!--                                           name="sale_info_group"-->
+<!--                                           invisible="move_type not in ('out_invoice', 'out_refund')">-->
+<!--                                        <label for="ref" string="Customer Reference" />-->
+<!--                                        <field name="ref" nolabel="1"/>-->
+<!--                                        <field name="user_id" invisible="1" force_save="1"/>-->
+<!--                                        <field name="invoice_user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>-->
+<!--                                        <field name="invoice_origin" string="Source Document" force_save="1" invisible="1"/>-->
+<!--                                        <field name="partner_bank_id"-->
+<!--                                               context="{'default_partner_id': bank_partner_id, 'display_account_trust': True}"-->
+<!--                                               domain="[('partner_id.ref_company_ids', 'parent_of', company_id)]"-->
+<!--                                               readonly="state != 'draft'"/>-->
+<!--                                        <field name="payment_reference"-->
+<!--                                            invisible="move_type not in ('out_invoice', 'out_refund')"-->
+<!--                                            readonly="inalterable_hash"-->
+<!--                                            placeholder="Standard communication"/>-->
+<!--                                        <field name="qr_code_method"-->
+<!--                                               invisible="not display_qr_code"/>-->
+<!--                                        <field name="delivery_date" readonly="state != 'draft'"/>-->
+<!--                                    </group>-->
+<!--                                    <group string="Accounting"-->
+<!--                                           name="accounting_info_group"-->
+<!--                                           invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')">-->
+<!--                                        <field name="company_id" groups="base.group_multi_company"/>-->
+<!--                                        <field name="invoice_incoterm_id"/>-->
+<!--                                        <field name="incoterm_location"/>-->
+<!--                                        <field name="fiscal_position_id" readonly="state in ['cancel', 'posted']"/>-->
+<!--                                        <field name="secured" groups="account.group_account_secured,base.group_no_one"/>-->
+<!--                                        <field name="preferred_payment_method_line_id"-->
+<!--                                               string="Payment Method"-->
+<!--                                               domain="[('payment_type', '=', 'inbound'), ('company_id', '=', company_id)]"-->
+<!--                                               invisible="move_type in ('in_invoice', 'in_refund')"-->
+<!--                                        />-->
+<!--                                        <field name="preferred_payment_method_line_id"-->
+<!--                                               string="Payment Method"-->
+<!--                                               domain="[('payment_type', '=', 'outbound'), ('company_id', '=', company_id)]"-->
+<!--                                               invisible="move_type in ('out_invoice', 'out_refund')"-->
+<!--                                        />-->
+<!--                                        <field name="invoice_cash_rounding_id" groups="account.group_cash_rounding" readonly="state != 'draft'"/>-->
+<!--                                        <field name="invoice_source_email"-->
+<!--                                               widget="email"-->
+<!--                                               invisible="move_type not in ('in_invoice', 'in_refund') or not invoice_source_email"/>-->
+<!--                                        <field name="auto_post"-->
+<!--                                               readonly="state != 'draft'"/>-->
+<!--                                        <field name="auto_post_until"-->
+<!--                                               invisible="auto_post in ('no', 'at_date')"-->
+<!--                                               readonly="state != 'draft'"/>-->
+<!--                                        <field name="checked"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                            <page id="other_tab_entry" string="Other Info" name="other_info"-->
+<!--                                  invisible="move_type != 'entry'">-->
+<!--                                <group id="other_tab_entry_group">-->
+<!--                                    <group name="misc_group">-->
+<!--                                        <field name="auto_post"-->
+<!--                                               invisible="move_type != 'entry'"-->
+<!--                                               readonly="state != 'draft'"/>-->
+<!--                                        <field name="reversed_entry_id"-->
+<!--                                               invisible="move_type != 'entry' or not reversed_entry_id"/>-->
+<!--                                        <field name="auto_post_until"-->
+<!--                                               invisible="auto_post in ('no', 'at_date')"-->
+<!--                                               readonly="state != 'draft'"/>-->
+<!--                                        <field name="checked"-->
+<!--                                               invisible="move_type != 'entry'" />-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="fiscal_position_id" readonly="state in ['cancel', 'posted']"/>-->
+<!--                                        <field name="company_id" groups="base.group_multi_company" required="1"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                                &lt;!&ndash; Internal note &ndash;&gt;-->
+<!--                                <field name="narration" placeholder="Add an internal note..." nolabel="1" height="50"/>-->
+<!--                            </page>-->
                         </notebook>
                     </sheet>
                     <!-- Attachment preview -->
@@ -1812,7 +1812,7 @@
             <field name="name">Invoices</field>
             <field name="path">invoicing</field>
             <field name="res_model">account.move</field>
-            <field name="view_mode">list,kanban,form,activity</field>
+            <field name="view_mode">list,form</field>
             <field name="view_id" ref="view_out_invoice_tree"/>
             <field name="search_view_id" ref="view_account_invoice_filter"/>
             <field name="domain">[('move_type', 'in', ['out_invoice', 'out_refund'])]</field>

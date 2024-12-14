@@ -14,10 +14,10 @@
                 </div>
 
                 <!-- EDIs and Sending method -->
-                <div class="m-0" id="extra_edis">
-                    <field name="extra_edi_checkboxes" widget="account_json_checkboxes" invisible="not extra_edi_checkboxes"/>
-                    <field name="sending_method_checkboxes" widget="account_json_checkboxes"/>
-                </div>
+<!--                <div class="m-0" id="extra_edis">-->
+<!--                    <field name="extra_edi_checkboxes" widget="account_json_checkboxes" invisible="not extra_edi_checkboxes"/>-->
+<!--                    <field name="sending_method_checkboxes" widget="account_json_checkboxes"/>-->
+<!--                </div>-->
 
 
                 <!-- PDF template -->
@@ -29,39 +29,39 @@
                 </group>
 
                 <!-- Mail composer -->
-                <div invisible="'email' not in sending_methods">
-                    <group>
-                        <label for="mail_partner_ids" string="Recipients"/>
-                        <div>
-                            <span>Followers of the document and</span>
-                            <field name="mail_partner_ids"
-                                   widget="many2many_tags"
-                                   placeholder="Add contacts to notify..."
-                                   options="{'no_quick_create': True}"
-                                   context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"/>
-                        </div>
-                        <field name="mail_subject"
-                               placeholder="Subject..."
-                               required="'email' in sending_methods"/>
-                    </group>
-                    <field name="mail_body"
-                           class="oe-bordered-editor"
-                           widget="html_mail"/>
-                    <group>
-                        <group>
-                            <field name="mail_attachments_widget"
-                                   widget="mail_attachments"
-                                   string="Attach a file"
-                                   nolabel="1"
-                                   colspan="2"/>
-                        </group>
-                        <group>
-                            <field name="mail_template_id"
-                                   options="{'no_create': True, 'no_edit': True}"
-                                   context="{'default_model': 'account.move'}"/>
-                        </group>
-                    </group>
-                </div>
+<!--                <div invisible="'email' not in sending_methods">-->
+<!--                    <group>-->
+<!--                        <label for="mail_partner_ids" string="Recipients"/>-->
+<!--                        <div>-->
+<!--                            <span>Followers of the document and</span>-->
+<!--                            <field name="mail_partner_ids"-->
+<!--                                   widget="many2many_tags"-->
+<!--                                   placeholder="Add contacts to notify..."-->
+<!--                                   options="{'no_quick_create': True}"-->
+<!--                                   context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"/>-->
+<!--                        </div>-->
+<!--                        <field name="mail_subject"-->
+<!--                               placeholder="Subject..."-->
+<!--                               required="'email' in sending_methods"/>-->
+<!--                    </group>-->
+<!--                    <field name="mail_body"-->
+<!--                           class="oe-bordered-editor"-->
+<!--                           widget="html_mail"/>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="mail_attachments_widget"-->
+<!--                                   widget="mail_attachments"-->
+<!--                                   string="Attach a file"-->
+<!--                                   nolabel="1"-->
+<!--                                   colspan="2"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="mail_template_id"-->
+<!--                                   options="{'no_create': True, 'no_edit': True}"-->
+<!--                                   context="{'default_model': 'account.move'}"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </div>-->
 
                 <footer>
                     <button string="Print &amp; Send"

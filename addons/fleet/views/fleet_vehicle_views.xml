@@ -7,19 +7,19 @@
         <field name="arch" type="xml">
             <form string="Vehicle" js_class="fleet_form">
                 <field name="service_activity" invisible="1"/>
-                <header>
-                    <button string="Apply New Driver"
-                        class="btn btn-primary"
-                        type="object"
-                        name="action_accept_driver_change"
-                        invisible="not future_driver_id"/>
-                    <field name="state_id"  widget="statusbar" options="{'clickable': '1'}"/>
-                </header>
+<!--                <header>-->
+<!--                    <button string="Apply New Driver"-->
+<!--                        class="btn btn-primary"-->
+<!--                        type="object"-->
+<!--                        name="action_accept_driver_change"-->
+<!--                        invisible="not future_driver_id"/>-->
+<!--                    <field name="state_id"  widget="statusbar" options="{'clickable': '1'}"/>-->
+<!--                </header>-->
                 <sheet>
                     <field name="company_id" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="country_code" invisible="1"/>
-                    <div class="oe_button_box" name="button_box">
+                    <div class="oe_button_box" name="button_box" invisible="true">
                         <button name="open_assignation_logs"
                             type="object"
                             class="oe_stat_button"
@@ -86,52 +86,52 @@
                         <h2>
                             <field name="partner_id" readonly="1"/>
                         </h2>
-                        <label for="tag_ids" class="me-3"/>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+<!--                        <label for="tag_ids" class="me-3"/>-->
+<!--                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>-->
                     </div>
-                    <group col="2">
-                        <group string="Driver">
-                            <field name="active" invisible="1"/>
-                            <field name="vehicle_type" invisible="1"/>
-                            <field name="driver_id" domain="['|', ('company_id', '=', False ), ('company_id', '=', company_id)]" widget="many2one_avatar"/>
-                            <field name="future_driver_id" widget="many2one_avatar"/>
-                            <field name="plan_to_change_car" groups="fleet.fleet_group_manager" invisible="vehicle_type != 'car'"/>
-                            <field name="plan_to_change_bike" groups="fleet.fleet_group_manager"  invisible="vehicle_type != 'bike'"/>
-                            <field name="next_assignation_date"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
-                        </group>
+                    <group col="1">
+<!--                        <group string="Driver">-->
+<!--                            <field name="active" invisible="1"/>-->
+<!--                            <field name="vehicle_type" invisible="1"/>-->
+<!--                            <field name="driver_id" domain="['|', ('company_id', '=', False ), ('company_id', '=', company_id)]" widget="many2one_avatar"/>-->
+<!--                            <field name="future_driver_id" widget="many2one_avatar"/>-->
+<!--                            <field name="plan_to_change_car" groups="fleet.fleet_group_manager" invisible="vehicle_type != 'car'"/>-->
+<!--                            <field name="plan_to_change_bike" groups="fleet.fleet_group_manager"  invisible="vehicle_type != 'bike'"/>-->
+<!--                            <field name="next_assignation_date"/>-->
+<!--                            <field name="company_id" groups="base.group_multi_company"/>-->
+<!--                        </group>-->
                         <group string="Vehicle">
-                            <field name="category_id"/>
-                            <field name="order_date"/>
-                            <field name="acquisition_date" invisible="vehicle_type != 'car'"/>
-                            <field name="write_off_date" invisible="vehicle_type != 'car'"/>
+<!--                            <field name="category_id"/>-->
+<!--                            <field name="order_date"/>-->
+<!--                            <field name="acquisition_date" invisible="vehicle_type != 'car'"/>-->
+<!--                            <field name="write_off_date" invisible="vehicle_type != 'car'"/>-->
                             <field name="vin_sn"/>
                             <label for="odometer" invisible="vehicle_type != 'car'"/>
                             <div class="o_row o_hr_narrow_field" invisible="vehicle_type != 'car'">
                                 <field name="odometer"/>
                                 <field name="odometer_unit"/>
                             </div>
-                            <field name="manager_id" domain="[('share', '=', False), ('company_id', '=', company_id)]" widget="many2one_avatar_user"/>
-                            <field name="location"/>
+<!--                            <field name="manager_id" domain="[('share', '=', False), ('company_id', '=', company_id)]" widget="many2one_avatar_user"/>-->
+<!--                            <field name="location"/>-->
                         </group>
                     </group>
                     <field name="vehicle_properties" columns="2"/>
                     <notebook>
-                        <page string="Tax Info" name="page_tax_info">
-                            <group>
-                                <group col="1" name="fiscality_group" string="Fiscality">
-                                    <group col="1" name="fiscality_first_group">
-                                        <field name="horsepower_tax" widget="monetary"/>
-                                    </group>
-                                </group>
-                                <group string="Contract">
-                                    <field name="first_contract_date"/>
-                                    <field name="car_value" widget="monetary"/>
-                                    <field name="net_car_value" widget="monetary"/>
-                                    <field name="residual_value" widget="monetary"/>
-                                </group>
-                            </group>
-                        </page>
+<!--                        <page string="Tax Info" name="page_tax_info">-->
+<!--                            <group>-->
+<!--                                <group col="1" name="fiscality_group" string="Fiscality">-->
+<!--                                    <group col="1" name="fiscality_first_group">-->
+<!--                                        <field name="horsepower_tax" widget="monetary"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+<!--                                <group string="Contract">-->
+<!--                                    <field name="first_contract_date"/>-->
+<!--                                    <field name="car_value" widget="monetary"/>-->
+<!--                                    <field name="net_car_value" widget="monetary"/>-->
+<!--                                    <field name="residual_value" widget="monetary"/>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                        </page>-->
                         <page string="Model" name="page_model">
                             <group>
                                 <group string="Model" name="group_model">
@@ -141,36 +141,36 @@
                                     <field name="seats" invisible="vehicle_type != 'car'"/>
                                     <field name="doors" invisible="vehicle_type != 'car'"/>
                                     <field name="trailer_hook" invisible="vehicle_type != 'car'"/>
-                                    <field name="frame_type" invisible="vehicle_type != 'bike'"/>
-                                    <label for="frame_size" invisible="vehicle_type != 'bike'"/>
-                                    <div class="o_row" invisible="vehicle_type != 'bike'">
-                                        <field name="frame_size" /><span>cm</span>
-                                    </div>
-                                    <field name="electric_assistance" invisible="vehicle_type != 'bike'"/>
+<!--                                    <field name="frame_type" invisible="vehicle_type != 'bike'"/>-->
+<!--                                    <label for="frame_size" invisible="vehicle_type != 'bike'"/>-->
+<!--                                    <div class="o_row" invisible="vehicle_type != 'bike'">-->
+<!--                                        <field name="frame_size" /><span>cm</span>-->
+<!--                                    </div>-->
+<!--                                    <field name="electric_assistance" invisible="vehicle_type != 'bike'"/>-->
                                 </group>
                                 <group string="Engine" invisible="vehicle_type != 'car'">
-                                    <field name="power_unit"/>
-                                    <label for="power" invisible="power_unit != 'power'"/>
-                                    <div class="o_row" invisible="power_unit != 'power'">
-                                        <field name="power"/><span>kW</span>
-                                    </div>
-                                    <field name="horsepower" invisible="power_unit != 'horsepower'"/>
+<!--                                    <field name="power_unit"/>-->
+<!--                                    <label for="power" invisible="power_unit != 'power'"/>-->
+<!--                                    <div class="o_row" invisible="power_unit != 'power'">-->
+<!--                                        <field name="power"/><span>kW</span>-->
+<!--                                    </div>-->
+<!--                                    <field name="horsepower" invisible="power_unit != 'horsepower'"/>-->
                                     <label for="vehicle_range"/>
                                     <div class="o_row">
                                         <field name="vehicle_range"/><span>km</span>
                                     </div>
                                     <field name="fuel_type"/>
-                                    <label for="co2"/>
-                                    <div class="o_row" name="co2">
-                                        <field name="co2"/><span>g/km</span>
-                                    </div>
-                                    <field name="co2_standard"/>
+<!--                                    <label for="co2"/>-->
+<!--                                    <div class="o_row" name="co2">-->
+<!--                                        <field name="co2"/><span>g/km</span>-->
+<!--                                    </div>-->
+<!--                                    <field name="co2_standard"/>-->
                                 </group>
                             </group>
                         </page>
-                        <page string="Note" name="note">
-                            <field name="description" nolabel="1" placeholder="Write here any other information related to this vehicle" />
-                        </page>
+<!--                        <page string="Note" name="note">-->
+<!--                            <field name="description" nolabel="1" placeholder="Write here any other information related to this vehicle" />-->
+<!--                        </page>-->
                     </notebook>
                 </sheet>
                 <chatter/>
