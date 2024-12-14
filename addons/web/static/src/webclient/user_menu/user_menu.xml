@@ -16,7 +16,7 @@
                     </button>
                     <t t-set-slot="content">
                         <t t-foreach="getElements()" t-as="element" t-key="element_index">
-                            <t t-if="!element.hide">
+                            <t t-if="!element.hide and element.type != 'switch'">
                                 <DropdownItem
                                     t-if="element.type == 'item' || element.type == 'switch'"
                                     attrs="{ href: element.href, 'data-menu': element.id }"

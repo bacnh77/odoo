@@ -9,13 +9,13 @@
         <menuitem id="menu_board_journal_1" name="Dashboard" action="open_account_journal_dashboard_kanban" groups="account.group_account_basic" sequence="1"/>
         <menuitem id="menu_finance_receivables" name="Customers" sequence="2">
             <menuitem id="menu_action_move_out_invoice_type" action="action_move_out_invoice_type" sequence="1"/>
-            <menuitem id="menu_action_move_out_refund_type" action="action_move_out_refund_type" sequence="2"/>
-            <menuitem id="menu_action_move_out_receipt_type" action="action_move_out_receipt_type" groups="account.group_sale_receipts" sequence="3"/>
-            <menuitem id="menu_action_account_payments_receivable" name="Payments" action="action_account_payments" sequence="15"/>
+            <menuitem id="menu_action_move_out_refund_type" action="action_move_out_refund_type" sequence="2" groups="base.group_erp_manager"/>
+            <menuitem id="menu_action_move_out_receipt_type" action="action_move_out_receipt_type"  groups="base.group_erp_manager" sequence="3"/>
+            <menuitem id="menu_action_account_payments_receivable" name="Payments" action="action_account_payments" sequence="15" groups="base.group_erp_manager"/>
             <menuitem id="product_product_menu_sellable" name="Products" action="product_product_action_sellable" sequence="100"/>
             <menuitem id="menu_account_customer" name="Customers" action="res_partner_action_customer" sequence="110"/>
         </menuitem>
-        <menuitem id="menu_finance_payables" name="Vendors" sequence="3">
+        <menuitem id="menu_finance_payables" name="Vendors" sequence="3" groups="base.group_erp_manager">
             <menuitem id="menu_action_move_in_invoice_type" action="action_move_in_invoice_type" sequence="1"/>
             <menuitem id="menu_action_move_in_refund_type" action="action_move_in_refund_type" sequence="2"/>
             <menuitem id="menu_action_move_in_receipt_type" action="action_move_in_receipt_type" groups="account.group_purchase_receipts" sequence="3"/>
@@ -28,7 +28,7 @@
             <menuitem id="menu_action_account_moves_all" action="action_account_moves_all" groups="account.group_account_readonly" sequence="10"/>
             <menuitem id="menu_action_analytic_lines_tree" name="Analytic Items" action="analytic.account_analytic_line_action_entries" groups="account.group_account_invoice,account.group_account_readonly,analytic.group_analytic_accounting" sequence="31"/>
         </menuitem>
-        <menuitem id="menu_finance_reports" name="Reporting" sequence="20" groups="account.group_account_readonly,account.group_account_invoice">
+        <menuitem id="menu_finance_reports" name="Reporting" sequence="20" groups="base.group_erp_manager">
             <menuitem id="account_reports_partners_reports_menu" name="Partner Reports" sequence="3"/>
             <menuitem id="account_reports_management_menu" name="Management" sequence="4">
                 <menuitem id="menu_action_account_invoice_report_all" name="Invoice Analysis" action="action_account_invoice_report_all" sequence="1"/>
