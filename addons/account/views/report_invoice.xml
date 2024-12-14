@@ -51,8 +51,8 @@
                 <div class="clearfix invoice_main">
                     <div class="page mb-4">
                         <t t-set="layout_document_title">
-                            <span t-if="not proforma"></span>
-                            <span t-else="">PROFORMA</span>
+                            <!--<span t-if="not proforma"></span>
+                            <span t-else="">PROFORMA</span>-->
                             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
                             <span t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
                             <span t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
@@ -64,7 +64,7 @@
                             <span t-if="o.name != '/'" t-field="o.name">INV/2023/0001</span>
                         </t>
                         <div class="oe_structure"></div>
-                        <div id="informations" class="row mb-4">
+                        <!--<div id="informations" class="row mb-4">
                             <div class="col" t-if="o.invoice_date" name="invoice_date">
                                 <t t-if="o.move_type == 'out_invoice'"><strong>Invoice Date</strong></t>
                                 <t t-elif="o.move_type == 'out_refund'"><strong>Credit Note Date</strong></t>
@@ -100,14 +100,21 @@
                                 </div>
                                 <div t-else="" t-field="o.invoice_incoterm_id.code" class="m-0"/>
                             </div>
-                        </div>
+                        </div>-->
 
-                        <t t-if="o.vehicle_id">
+                        <!--<t t-if="o.vehicle_id">
                             <t t-set="vehicle" t-value="o.vehicle_id"/>
                             <div class="oe_structure">
-                                <strong>Vehicle</strong>
                                 <table class="table o_main_table table-borderless" name="vehicle_table">
                                     <thead>
+                                        <th name="th_make" class="text-start">
+                                            <span>
+                                                <t t-if="o.move_type == 'out_invoice'">Invoice Date</t>
+                                                <t t-elif="o.move_type == 'out_refund'">Credit Note Date</t>
+                                                <t t-elif="o.move_type == 'out_receipt'">Receipt Date</t>
+                                                <t t-else="">Date</t>
+                                            </span>
+                                        </th>
                                         <th name="th_make" class="text-start"><span>Make</span></th>
                                         <th name="th_model" class="text-start"><span>Model</span></th>
                                         <th name="th_year" class="text-start"><span>Year</span></th>
@@ -117,6 +124,9 @@
                                     </thead>
                                     <tbody class="invoice_tbody">
                                         <tr>
+                                            <td>
+                                                <span t-field="o.invoice_date">2023-09-12</span>
+                                            </td>
                                             <td>
                                                 <span t-if="vehicle.model_id" t-field="vehicle.model_id.name">Make</span>
                                             </td>
@@ -139,7 +149,48 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </t>-->
 
+                        <t t-if="o.vehicle_id">
+                            <t t-set="vehicle" t-value="o.vehicle_id"/>
+                            <div class="oe_structure">
+                                <table class="table o_main_table table-borderless" name="vehicle_table">
+                                    <tbody class="invoice_tbody">
+                                        <tr>
+                                            <td class="text-center">
+                                                <span>
+                                                    <strong>
+                                                        <t t-if="o.move_type == 'out_invoice'">Invoice Date</t>
+                                                        <t t-elif="o.move_type == 'out_refund'">Credit Note Date</t>
+                                                        <t t-elif="o.move_type == 'out_receipt'">Receipt Date</t>
+                                                        <t t-else="">Date</t>
+                                                    </strong>
+                                                </span>
+                                            </td>
+
+                                            <td class="text-left"><strong>Make</strong></td>
+                                            <td><span t-if="vehicle.model_id" t-field="vehicle.model_id.name">Make</span></td>
+                                            <td class="text-left"><strong>Chassis No</strong></td>
+                                            <td><span t-if="vehicle.vin_sn" t-field="vehicle.vin_sn">VIN/SN</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2" class="text-center">
+                                                <span t-field="o.invoice_date">2023-09-12</span>
+                                            </td>
+                                            <td class="text-left"><strong>Brand</strong></td>
+                                            <td><span t-if="vehicle.model_id and vehicle.model_id.brand_id" t-field="vehicle.model_id.brand_id.name">Brand</span></td>
+                                            <td class="text-left"><strong>License Plate</strong></td>
+                                            <td><span t-if="vehicle.license_plate" t-field="vehicle.license_plate">License Plate</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left px-2"><strong>Year</strong></td>
+                                            <td><span t-if="vehicle.model_year" t-field="vehicle.model_year">Year</span></td>
+                                            <td class="text-left"><strong>Odometer</strong></td>
+                                            <td><span t-field="o.vehicle_odometer">0</span> <span>Km</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </t>
 
                         <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
